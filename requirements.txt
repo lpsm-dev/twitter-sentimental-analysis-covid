@@ -6,3 +6,12 @@ python-json-logger==0.1.11
 pyfiglet==0.7
 termcolor==1.1.0
 colorama==0.4.3
+
+# FLASK
+Flask==1.1.1
+Flask-RESTful==0.3.8
+flask-restplus==0.13.0
+uWSGI==2.0.18
+
+# TWITTER 
+tweepy==3.8.0

@@ -31,7 +31,7 @@ services:
         max-size: "500k"
         max-file: "20"
     networks:
-      - sentimental
+      - sentimental-analysis
     volumes:
       - log:/var/log/sentiment-analysis/
 

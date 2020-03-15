@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file twitter.py."""
+"""Documentation file exception.py"""
 
 # =============================================================================
 # IMPORTS
 # =============================================================================
 
-from app.restplus import api
-from flask_restplus import fields
+from typing import NoReturn, Text
 
 # =============================================================================
-# FUNCTIONS
+# CLASS - EXCEPTION DEFAULT
 # =============================================================================
 
-def twitter_serializer():
-    return api.model("Twitter",{
-                "phrase": fields.String(required=True),
-                "language": fields.String(required=True)
-            })
+class ExceptionDefault(object):
+
+    @staticmethod
+    def raise_exception(exception: Text) -> NoReturn:
+        raise exception
+    

@@ -9,8 +9,10 @@ WORKDIR /tmp/install
 
 COPY [ "./requirements.txt", "." ]
 
-RUN pip3 install --upgrade pip && \
-    pip3 install --no-cache-dir -r requirements.txt
+RUN apk add --update --no-cache --virtual=build-dependencies linux-headers build-base && \
+    pip3 install --upgrade pip && \
+    pip3 install --no-cache-dir -r requirements.txt && \
+    apk del --purge build-dependencies
 
 FROM alpine:${ALPINE_VERSION}
 
