@@ -22,11 +22,15 @@ LABEL maintainer="Lucca Pessoa da Silva Matos - luccapsm@gmail.com" \
       org.label-schema.python="https://www.python.org/" \
       org.label-schema.name="Sentimental Analysis" 
 
-ENV HOME=/usr/src/code
+ENV HOME=/usr/src/code \
+    LOG_PATH=/var/log/sentiment-analysis \
+    LOG_FILE=file.log \
+    LOG_LEVEL=DEBUG \
+    LOGGER="Sentiment Analysis"
 
 RUN set -ex && apk update && \
     addgroup -g 1000 python && adduser -u 999 -G python -h ${HOME} -s /bin/sh -D python && \
-    mkdir -p ${HOME} && chown -hR python:python ${HOME}
+    mkdir -p ${HOME} && chown -hR python:python ${HOME} /var
 
 RUN apk update && apk add --update --no-cache expat=2.2.9-r1 'su-exec>=0.2'
 

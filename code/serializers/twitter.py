@@ -6,6 +6,7 @@
 # IMPORTS
 # =============================================================================
 
+from typing import Callable
 from app.restplus import api
 from flask_restplus import fields
 
@@ -13,7 +14,7 @@ from flask_restplus import fields
 # FUNCTIONS
 # =============================================================================
 
-def twitter_serializer():
+def twitter_serializer() -> Callable:
     return api.model("Twitter",{
                 "phrase": fields.String(required=True),
                 "language": fields.String(required=True)

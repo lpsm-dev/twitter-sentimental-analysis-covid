@@ -21,7 +21,11 @@ class Configuration(ExceptionDefault):
         self._envs = {"LOG_PATH": self._get_env_value("LOG_PATH"),
                         "LOG_FILE": self._get_env_value("LOG_FILE"),
                         "LOG_LEVEL": self._get_env_value("LOG_LEVEL"),
-                        "LOGGER": self._get_env_value("LOGGER")}
+                        "LOGGER": self._get_env_value("LOGGER"),
+                        "TWITTER_CONSUMER_KEY": self._get_env_value("TWITTER_CONSUMER_KEY"),
+                        "TWITTER_CONSUMER_SECRET": self._get_env_value("TWITTER_CONSUMER_SECRET"),
+                        "TWITTER_ACCESS_TOKEN": self._get_env_value("TWITTER_ACCESS_TOKEN"),
+                        "TWITTER_ACCESS_TOKEN_SECRET": self._get_env_value("TWITTER_ACCESS_TOKEN_SECRET")}
 
     @staticmethod
     def _get_env_value(env: Text) -> Text:
