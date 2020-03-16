@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file twitter.py."""
+"""Documentation file tweets.py."""
 
 # =============================================================================
 # IMPORTS
 # =============================================================================
 
-from typing import Callable
 from app.restplus import api
 from flask_restplus import fields
 
@@ -14,8 +13,9 @@ from flask_restplus import fields
 # FUNCTIONS
 # =============================================================================
 
-def twitter_serializer() -> Callable:
-    return api.model("Twitter",{
+tweets_serializer = api.model("Tweets",{
                 "phrase": fields.String(required=True),
+                "count": fields.Integer(required=False),
+                "result_type": fields.String(required=False),
                 "language": fields.String(required=True)
             })

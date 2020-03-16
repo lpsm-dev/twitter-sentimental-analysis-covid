@@ -6,9 +6,9 @@
 # IMPORTS
 # =============================================================================
 
-from client.twitter import TwitterClient
+from app.client.twitter import TwitterClient
 from typing import NoReturn, Text, Callable
-from settings.configuration import Configuration
+from app.settings.configuration import Configuration
 
 # =============================================================================
 # CLASS - FUNCTIONS
@@ -25,7 +25,7 @@ class Functions(object):
                                 self.config.get_env("TWITTER_ACCESS_TOKEN_SECRET"), self.logger).twitter_client
     
     def search(self, **query):
-        return [elemento for elemento in self.twitter.search(**query)]
+        return [elemento for elemento in self.twitter.search(**query) if elemento]
 
     @property
     def config(self) -> Text:

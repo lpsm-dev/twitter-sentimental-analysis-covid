@@ -6,12 +6,10 @@
 # IMPORTS
 # =============================================================================
 
-from typing import Callable
 from flask import Blueprint
 
 # =============================================================================
-# FUNCTIONS
+# GLOBAL
 # =============================================================================
 
-def api_blueprint() -> Callable:
-    return Blueprint("api", __name__)
+api_blueprint = Blueprint("api", __name__)

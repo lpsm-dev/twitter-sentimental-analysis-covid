@@ -20,9 +20,9 @@ LABEL maintainer="Lucca Pessoa da Silva Matos - luccapsm@gmail.com" \
       org.label-schema.url="https://github.com/lpmatos" \
       org.label-schema.alpine="https://alpinelinux.org/" \
       org.label-schema.python="https://www.python.org/" \
-      org.label-schema.name="Sentimental Analysis" 
+      org.label-schema.name="Twitter Sentimental Analysis API" 
 
-ENV HOME=/usr/src/code \
+ENV HOME=/app \
     LOG_PATH=/var/log/sentiment-analysis \
     LOG_FILE=file.log \
     LOG_LEVEL=DEBUG \
@@ -32,16 +32,21 @@ RUN set -ex && apk update && \
     addgroup -g 1000 python && adduser -u 999 -G python -h ${HOME} -s /bin/sh -D python && \
     mkdir -p ${HOME} && chown -hR python:python ${HOME} /var
 
-RUN apk update && apk add --update --no-cache expat=2.2.9-r1 'su-exec>=0.2'
+RUN apk update && apk add --update --no-cache expat=2.2.9-r1 sqlite-dev=3.30.1-r1 'su-exec>=0.2'
 
 WORKDIR ${HOME}
 
 COPY --chown=python:python --from=install-env [ "/usr/local", "/usr/local/" ]
-COPY --chown=python:python [ "./code", "." ]
+
+RUN python -m nltk.downloader punkt
+
+COPY --chown=python:python [ "./code", "/app" ]
 COPY [ "./docker-entrypoint.sh", "/usr/local/bin/" ]
 
 RUN find ./ -iname "*.py" -type f -exec chmod a+x {} \; -exec echo {} \;;
 
+EXPOSE 5000
+
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
-CMD [ "sh" ]
+CMD [ "uwsgi", "--ini", "/app/uwsgi.ini" ]
