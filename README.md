@@ -1,6 +1,10 @@
 Sentiment Analysis
 ============
 
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/lpmatos)
+
+![Alt text](docs/images/ROUTES.png?raw=true "Sentimental Analysis")
+
 ## Copyright (c)
 
 Lucca Pessoa da Silva Matos (c) 2019 - **GitHub Repository**.
@@ -25,6 +29,19 @@ This will give access on your **local machine** to this project.
 * **Makefile** is a file containing a set of automation policies.
 * **README.md** is an optional file. A human-readable **README** file.
 * The files found in the project root are support files.
+
+## Description
+
+This is a project whose focus is to address the analysis of feelings in a basic way. An api was created to perform the search for tweets and as a result returns a list with the classification: positive, neutral, negative.
+
+![Alt text](docs/images/RESULT.png?raw=true "Result Sentimental Analysis")
+
+## Pre-Requisites
+
+**Tools**
+:---:
+**Python**
+**Docker**
 
 ## Built with
 

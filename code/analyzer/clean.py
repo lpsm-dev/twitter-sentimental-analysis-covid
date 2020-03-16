@@ -41,15 +41,10 @@ class TweetCleaner(object):
             retweet_info = ""
 
         cleaned_text = re.sub(r"@[a-zA-Z0-9_]+", "", (retweet_info + cleaned_text)).strip()
-
         cleaned_text = re.sub(r"RT\s:\s", "", cleaned_text).lstrip()
-
         cleaned_text = cleaned_text[::] if cleaned_text[0] != " " else cleaned_text[1::]
-
         cleaned_text = self.give_emoji_free_text(cleaned_text)
-
         cleaned_text = re.sub(r"http\S+", "", cleaned_text)
-
         cleaned_text = re.sub(r"https\S+", "", cleaned_text)
 
         return cleaned_text

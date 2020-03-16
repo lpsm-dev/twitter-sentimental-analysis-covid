@@ -26,13 +26,17 @@ ENV HOME=/app \
     LOG_PATH=/var/log/sentiment-analysis \
     LOG_FILE=file.log \
     LOG_LEVEL=DEBUG \
-    LOGGER="Sentiment Analysis"
+    LOGGER="Sentiment Analysis" \
+    TWITTER_CONSUMER_KEY= \
+    TWITTER_CONSUMER_SECRET= \
+    TWITTER_ACCESS_TOKEN= \
+    TWITTER_ACCESS_TOKEN_SECRET=
 
 RUN set -ex && apk update && \
     addgroup -g 1000 python && adduser -u 999 -G python -h ${HOME} -s /bin/sh -D python && \
     mkdir -p ${HOME} && chown -hR python:python ${HOME} /var
 
-RUN apk update && apk add --update --no-cache expat=2.2.9-r1 sqlite-dev=3.30.1-r1 'su-exec>=0.2'
+RUN apk update && apk add --update --no-cache expat=2.2.9-r1 sqlite-dev=3.30.1-r1 libffi=3.2.1-r6 'su-exec>=0.2'
 
 WORKDIR ${HOME}
 
