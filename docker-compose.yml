@@ -14,8 +14,8 @@ x-entrypoint: &default-entrypoint
   entrypoint: >
     /bin/sh -c "
       set -e
-      chmod a+x /usr/local/bin/wait && \
-        /usr/local/bin/wait && echo Hello
+      chmod a+x /usr/local/bin/wait && chmod a+x /usr/local/bin/docker-entrypoint \
+        /usr/local/bin/wait && /usr/local/bin/docker-entrypoint uwsgi --ini /usr/src/code/uwsgi.ini
       /bin/bash || exit 0
     "
 
@@ -35,13 +35,67 @@ services:
     build:
       context: ./${PATH_DOCKERFILE}
       dockerfile: Dockerfile
+    <<: *default-entrypoint
+    stdin_open: true
+    tty: true
     ports:
       - target: 5000
         published: 5000
         protocol: tcp
         mode: host
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "500k"
-        max-file: "20"
+    healthcheck:
+      test: nc -z mongodb 27017 || exit 1
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    restart: on-failure
+    logging: *default-logging
+    depends_on: [ "mongodb" ]
+    <<: *default-volumes
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo:bionic
+    container_name: mongodb
+    env_file: [ "./.env" ]
+    command: mongod --auth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGODB_DATA_DIR: ${MONGODB_DATA_DIR}
+      MONDODB_LOG_DIR: ${MONDODB_LOG_DIR}
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: on-failure
+    logging: *default-logging
+    volumes:
+      - mongodbdata:/data/db
+    networks:
+      - backend
+
+# ==============================================================================
+# NETWORKS
+# ==============================================================================
+
+networks:
+  backend:
+    driver: bridge
+
+# ==============================================================================
+# VOLUMES
+# ==============================================================================
+
+volumes:
+  mongodbdata:
+    driver: local

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# DOCKER USER PERMISSIONS SCRIPT
-
 set -e
 
 # First arg is `-f` or `--some-option`or first arg is `something.conf`
