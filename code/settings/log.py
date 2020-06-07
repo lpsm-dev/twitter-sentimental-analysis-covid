@@ -1,94 +1,57 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file log.py."""
-
-# =============================================================================
-# IMPORTS
-# =============================================================================
-
-import sys
 import logging
 import coloredlogs
-import logging.config
-from utils.os import OS
+from tools.os import OS
 from typing import NoReturn, Text
-from pythonjsonlogger import jsonlogger
+from settings.handlers import BaseFileHandler, ContextHandler
 
-# =============================================================================
-# CLASS - LOG
-# =============================================================================
+class SingletonLogger(type):
 
-class Log(OS):
+  _instances = {}
 
-    def __init__(self, log_path: Text, log_file: Text, log_level: Text, logger_name: Text) -> NoReturn:
-        self._log_path = log_path if log_path else "/var/log/sentiment-analysis"
-        self._log_file = self.join_directory_and_file(log_path, log_file if log_file else "file.log")
+  def __call__(cls, *args, **kwargs):
+    if cls not in cls._instances:
+      cls._instances[cls] = super(SingletonLogger, cls).__call__(*args, **kwargs)
+    return cls._instances[cls]
 
-        self._check_log_path_and_log_file()
+class Log(OS, metaclass=SingletonLogger):
 
-        self._log_level = self._check_log_level(log_level)
-        self._logger_name = logger_name
+  def __init__(self, log_path: Text, log_file: Text, log_level: Text, logger_name: Text) -> NoReturn:
 
-        self.formatter = "%(levelname)s - %(asctime)s - %(message)s - %(pathname)s - %(funcName)s"
+    self._log_path = log_path
+    self._log_file = self.join_directory_with_file(self.log_path, log_file)
+    self._log_level = log_level if log_level in ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"] else None
+    self._logger_name = logger_name
+    self.formatter = "%(levelname)s - %(asctime)s - %(message)s - %(pathname)s - %(funcName)s"
+    self.check_if_path_and_file_exist(self._log_path, self._log_file)
+    self._logger = logging.getLogger(self.logger_name)
+    self._logger.setLevel(self.log_level)
+    self._base_configuration_log_colored()
+    self._logger.addHandler(ContextHandler(BaseFileHandler()).get_handler(log_file=self.log_file, log_level=self.log_level, formatter=self.formatter))
 
-        self._logger = logging.getLogger(self._logger_name)
+  def _base_configuration_log_colored(self) -> coloredlogs.install:
+    coloredlogs.install(level=self._log_level,
+                        logger=self.logger,
+                        fmt=self.formatter,
+                        milliseconds=True)
 
-        self._logger.setLevel(self._log_level)
-        self._base_configuration_log_colored()
-        self._logger.addHandler(self._base_configuration_log_file())
+  @property
+  def log_path(self) -> Text:
+    return self._log_path
 
-    @staticmethod
-    def _check_log_level(level: Text) -> Text:
-        return level if level in ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"] else None
+  @property
+  def log_file(self) -> Text:
+    return self._log_file
 
-    def _check_log_path_and_log_file(self) -> NoReturn:
-        if self.check_if_is_dir(self.log_path):
-            print(f"\nThe log path {self.log_path} alredy exist in the system")
-            if self.check_if_is_file(self.log_file):
-                print(f"\nThe log file {self.log_file} alredy exist in the system... Everything is okay")
-            else:
-                self.create_file(self.log_file)
-        else:
-            self.create_directory(self.log_path)
-            self.create_file(self.log_file)
+  @property
+  def log_level(self) -> Text:
+    return self._log_level
 
-    def _base_configuration_log_colored(self) -> coloredlogs.install:
-        try:
-            coloredlogs.install(
-                level=self._log_level,
-                logger=self._logger,
-                fmt=self.formatter,
-                milliseconds=True)
-        except Exception as error:
-            print(f"\nError general exception in create a base configuration colored to use in log file - {error}")
+  @property
+  def logger_name(self) -> Text:
+    return self._logger_name
 
-    def _base_configuration_log_file(self) -> logging.FileHandler:
-        try:
-            file_handler = logging.FileHandler(
-            filename=f"{self._log_file}")
-            file_handler.setLevel(self._log_level)
-            file_handler.setFormatter(jsonlogger.JsonFormatter(self.formatter))
-            return file_handler if file_handler else None
-        except Exception as error:
-            print(f"\nError general exception in create the base configuration to used log file - {error}")
-
-    @property
-    def log_path(self) -> Text:
-        return self._log_path
-
-    @property
-    def log_file(self) -> Text:
-        return self._log_file
-
-    @property
-    def log_level(self) -> Text:
-        return self._log_level
-
-    @property
-    def logger_name(self) -> Text:
-        return self._logger_name
-
-    @property
-    def logger(self) -> Text:
-        return self._logger
-        
+  @property
+  def logger(self) -> Text:
+    return self._logger

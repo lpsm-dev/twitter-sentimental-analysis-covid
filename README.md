@@ -5,7 +5,7 @@
 <h1 align="center">Welcome to Sentiment Analysis Repository</h1>
 
 <p align="center">
-  <strong>IESB Project - Sentiment Analysis API + Twitter Crawler Covid-19 + Docker + Docker Compose</strong>
+  <strong>Python Sentiment Analysis API + Docker + Docker Compose</strong>
 </p>
 
 <p align="center">

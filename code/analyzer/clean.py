@@ -1,19 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file clean.py."""
-
-# =============================================================================
-# IMPORTS
-# =============================================================================
-
 import re
 import emoji
 
 from nltk.corpus import stopwords
-
-# =============================================================================
-# CLASS - TWEET CLEANER
-# =============================================================================
 
 class TweetCleaner(object):
 
@@ -29,7 +19,7 @@ class TweetCleaner(object):
         emoji_list = [c for c in allchars if c in emoji.UNICODE_EMOJI]
         clean_text = " ".join([str for str in text.split() if not any(i in str for i in emoji_list)])
         return clean_text
-      
+
     def get_cleaned_text(self, text):
         cleaned_text = text.replace("\n", "").replace('\"','').replace('\'','').replace('-',' ')
 

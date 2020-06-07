@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file routes.py."""
-
-# =============================================================================
-# IMPORTS
-# =============================================================================
-
 from flask_restplus import Resource
 from app.restplus import api, responses, ns_tweets
 from app.serializers.tweets import tweets_serializer
@@ -18,7 +12,7 @@ from app.analyzer.core import TweetAnalyzer
 from app.analyzer.clean import TweetCleaner
 
 # =============================================================================
-# IMPORTS
+# GLOBAL
 # =============================================================================
 
 config = Configuration()
@@ -28,9 +22,9 @@ log_file = config.get_env("LOG_FILE") if config.get_env("LOG_FILE") else None
 
 log = Log(log_path, log_file, config.get_env("LOG_LEVEL"), config.get_env("LOGGER")).logger
 
-# =============================================================================
-# IMPORTS
-# =============================================================================
+# ==============================================================================
+# ROUTES
+# ==============================================================================
 
 @ns_tweets.route("/corona")
 class TweetCoronaNoQuery(Resource):
@@ -40,7 +34,7 @@ class TweetCoronaNoQuery(Resource):
         try:
             log.info("Getting corona tweets...")
             tweet_clean = TweetCleaner(remove_stop_words=False, remove_retweets=False)
-            
+
             query = {"q": "Corona",
                     "result_type": "mixed",
                     "count": 100,
@@ -49,7 +43,7 @@ class TweetCoronaNoQuery(Resource):
             results = Functions(log).search(**query)
 
             tweets = [tweet_clean.get_cleaned_text(elemento.text) for elemento in results]
-            
+
             if tweets:
                 log.info("200 - GET - successfully in get corona tweets")
                 return {"message": responses[200],
@@ -74,7 +68,7 @@ class TweetCoronaSentimentalNoQuery(Resource):
         try:
             log.info("Getting corona tweets...")
             tweet_clean = TweetCleaner(remove_stop_words=False, remove_retweets=False)
-            
+
             query = {"q": "Corona",
                     "result_type": "mixed",
                     "count": 100,
@@ -83,7 +77,7 @@ class TweetCoronaSentimentalNoQuery(Resource):
             results = Functions(log).search(**query)
 
             tweets = [tweet_clean.get_cleaned_text(elemento.text) for elemento in results]
-            
+
             if tweets:
                 log.info("200 - GET - successfully in get corona sentimental tweets")
 
@@ -131,7 +125,7 @@ class TweetNoQuery(Resource):
             results = Functions(log).search(**query)
 
             tweets = [tweet_clean.get_cleaned_text(elemento.text) for elemento in results]
-            
+
             if tweets:
                 log.info("200 - GET - successfully in get tweets")
                 return {"message": responses[200],
@@ -162,7 +156,7 @@ class TweetSentimentalNoQuery(Resource):
             results = Functions(log).search(**query)
 
             tweets = [tweet_clean.get_cleaned_text(elemento.text) for elemento in results]
-            
+
             if tweets:
                 log.info("200 - GET - successfully in get sentimental tweets")
 
@@ -195,4 +189,3 @@ class TweetSentimentalNoQuery(Resource):
         except Exception as error:
             log.error("400 - GET - {}".format(error))
             return {"message": str(error), "data": [], "quantidade": 0, "status": 400}, 400
-            

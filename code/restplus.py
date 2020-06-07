@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file restplus.py."""
-
-# =============================================================================
-# IMPORTS
-# =============================================================================
-
 from flask_restplus import Api
 from typing import NoReturn, Callable
 
-# =============================================================================
+# ==============================================================================
 # GLOBAL
-# =============================================================================
+# ==============================================================================
 
-api = Api(version="1.0", 
+api = Api(version="1.0",
         prefix="",
         title="Sentimental Analysis API",
         description="Swagger domumentation from Sentimental Analysis API",
@@ -28,9 +22,9 @@ responses = {200: "Successful operation",
              404: "The server could not find the requested resource (Not Found)",
              500: "Unexpected condition (Internal Server Error)"}
 
-# =============================================================================
-# IMPORTS
-# =============================================================================
+# ==============================================================================
+# FUNCTIONS
+# ==============================================================================
 
 def configure(app: Callable) -> NoReturn:
     api.init_app(app)

@@ -1,18 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file twitter.py."""
-
-# =============================================================================
-# IMPORTS
-# =============================================================================
-
 from tweepy import OAuthHandler, API
 from typing import NoReturn, Text, Callable
 from tweepy.error import TweepError, RateLimitError
-
-# =============================================================================
-# CLASS - TWITTER BASE
-# =============================================================================
 
 class TwitterBase(object):
 
@@ -43,10 +33,6 @@ class TwitterBase(object):
     def logger(self) -> Text:
         return self._logger
 
-# =============================================================================
-# CLASS - TWITTER AUTHENTICATOR
-# =============================================================================
-
 class TwitterAuthenticator(TwitterBase):
 
     def __init__(self, consumer_key: Text, consumer_secret: Text, access_token: Text, access_token_secret: Text, logger: Callable):
@@ -56,10 +42,6 @@ class TwitterAuthenticator(TwitterBase):
         auth = OAuthHandler(self.consumer_key, self.consumer_secret)
         auth.set_access_token(self.access_token, self.access_token_secret)
         return auth
-
-# =============================================================================
-# CLASS - TWITTER CLIENT
-# =============================================================================
 
 class TwitterClient(TwitterAuthenticator):
 

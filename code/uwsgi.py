@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""Documentation file restplus.py."""
-
-# =============================================================================
-# IMPORTS
-# =============================================================================
-
 import os, sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
