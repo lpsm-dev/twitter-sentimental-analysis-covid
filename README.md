@@ -1,72 +1,177 @@
-Sentiment Analysis
-============
+<p align="center">
+  <img alt="sentiment-analysis" src="docs/images/ROUTES.png" width="250px" float="center"/>
+</p>
 
-[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/lpmatos)
+<h1 align="center">Welcome to Sentiment Analysis Repository</h1>
 
-![Alt text](docs/images/ROUTES.png?raw=true "Sentimental Analysis")
+<p align="center">
+  <strong>IESB Project - Sentiment Analysis API + Twitter Crawler Covid-19 + Docker + Docker Compose</strong>
+</p>
 
-## Copyright (c)
+<p align="center">
+  <a href="https://github.com/lpmatos/sentiment-analysis">
+    <img alt="Open Source" src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102">
+  </a>
 
-Lucca Pessoa da Silva Matos (c) 2019 - **GitHub Repository**.
+  <a href="https://github.com/lpmatos/sentiment-analysis/graphs/contributors">
+    <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/lpmatos/sentiment-analysis">
+  </a>
 
-## Getting Started
+  <a href="https://github.com/lpmatos/sentiment-analysis">
+    <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/lpmatos/sentiment-analysis">
+  </a>
 
-To use this repository you need to make a **git clone**:
+  <a href="https://github.com/lpmatos/sentiment-analysis">
+    <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/lpmatos/sentiment-analysis">
+  </a>
+
+  <a href="https://github.com/lpmatos/sentiment-analysis/stargazers">
+    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/lpmatos/sentiment-analysis?style=social">
+  </a>
+
+  <a href="https://github.com/lpmatos/sentiment-analysis/commits/master">
+    <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/lpmatos/sentiment-analysis">
+  </a>
+
+  <a href="https://github.com/lpmatos/sentiment-analysis">
+    <img alt="Repository Size" src="https://img.shields.io/github/repo-size/lpmatos/sentiment-analysis">
+  </a>
+
+  <a href="https://github.com/lpmatos/sentiment-analysis/issues">
+    <img alt="Repository Issues" src="https://img.shields.io/github/issues/lpmatos/sentiment-analysis">
+  </a>
+
+  <a href="https://github.com/lpmatos/sentiment-analysis/blob/master/LICENSE">
+    <img alt="MIT License" src="https://img.shields.io/github/license/lpmatos/sentiment-analysis">
+  </a>
+</p>
+
+### Menu
+
+<p align="left">
+  <a href="#pre-requisites">Pre-Requisites</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#description">Description</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#how-to-contribute">How to contribute</a>
+</p>
+
+### By me a coffe
+
+Pull requests are welcome. If you'd like to support the work and buy me a ☕, I greatly appreciate it!
+
+<a href="https://www.buymeacoffee.com/EatdMck" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 100px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+### Getting Started
+
+To use this repository you need a **git clone**:
 
 ```bash
 git clone --depth 1 https://github.com/lpmatos/sentiment-analysis.git -b master
 ```
 
-This will give access on your **local machine** to this project.
+This will give access of the project on your local machine.
 
-## Organization
+### Pre-Requisites
 
-* **/code** in this folder we have the sentimental analysis api.
-* **/docs** is the directory where we have all documentation files.
-* **CHANGELOG.md** is a versioning file usend to control development versions.
-* **docker-compose.yml** is the **Docker** container orchestrator.
-* **Dockerfile** is a file used to set up your **Docker** environment.
-* **Makefile** is a file containing a set of automation policies.
-* **README.md** is an optional file. A human-readable **README** file.
-* The files found in the project root are support files.
+To this project you yeed:
 
-## Description
+* Python 3.8.
+* Docker and Docker Compose.
+* MongoDB.
+
+### Built with
+
+- [Python](https://www.python.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Docker](https://docs.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+### How to use it?
+
+1. Set the gitlab environment variables.
+2. Install python packages in requirements.txt.
+2. Run this script with docker-compose, Dockerfile or into your local machine with Python command.
+3. Profit.
+
+Press CTRL + C to stop it in Docker Compose or Dockerfile.
+
+### Description
 
 This is a project whose focus is to address the analysis of feelings in a basic way. An api was created to perform the search for tweets and as a result returns a list with the classification: positive, neutral, negative.
 
 ![Alt text](docs/images/RESULT.png?raw=true "Result Sentimental Analysis")
 
-## Pre-Requisites
+### Environment variables
 
-**Tools**
-:---:
-**Python**
-**Docker**
+**Name**  |  **Description**
+:---:  |  :---:
+**LOG_PATH**  |  Just the Log Path
+**LOG_FILE**  |  Just the Log File
+**LOG_LEVEL**  |  Just the Log Level
+**LOGGER_NAME**  |  Just the Logger name
 
-## Built with
+### 🐋 Development with Docker
 
-- [Alpine](https://alpinelinux.org/)
-- [Python](https://www.python.org/)
-- [Docker](https://docs.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
+Steps to build the Docker Image.
 
-## How to contribute
+#### Build
 
-1. Make a **Fork**.
+```bash
+docker image build -t <IMAGE_NAME> -f <PATH_DOCKERFILE> <PATH_CONTEXT_DOCKERFILE>
+docker image build -t <IMAGE_NAME> . (This context)
+```
 
-2. Follow the project organization.
+#### Run
 
-3. Add the file to the appropriate level folder - If the folder does not exist, create according to the standard.
+Steps to run the Docker Container.
 
-4. Make the **Commit**.
+* **Linux** running:
 
-5. Open a **Pull Request**.
+```bash
+docker container run -d -p <LOCAL_PORT:CONTAINER_PORT> <IMAGE_NAME> <COMMAND>
+docker container run -it --rm --name <CONTAINER_NAME> -p <LOCAL_PORT:CONTAINER_PORT> <IMAGE_NAME> <COMMAND>
+```
 
-6. Wait for your pull request to be accepted.. 🚀
+* **Windows** running:
 
+```
+winpty docker.exe container run -it --rm <IMAGE_NAME> <COMMAND>
+```
+
+For more information, access the [Docker](https://docs.docker.com/) documentation or [this](docs/annotations/docker.md).
+
+### 🐋 Development with Docker Compose
+
+Build and run a docker-compose.
+
+```bash
+docker-compose up --build
+```
+
+Down all services deployed by docker-compose.
+
+```bash
+docker-compose down
+```
+
+Down all services and delete all images.
+
+```bash
+docker-compose down --rmi all
+```
+
+### How to contribute
+
+>
+> 1. Make a **Fork**.
+> 2. Follow the project organization.
+> 3. Add the file to the appropriate level folder - If the folder does not exist, create according to the standard.
+> 4. Make the **Commit**.
+> 5. Open a **Pull Request**.
+> 6. Wait for your pull request to be accepted.. 🚀
+>
 Remember: There is no bad code, there are different views/versions of solving the same problem. 😊
 
-## Add to git and push
+### Add to git and push
 
 You must send the project to your GitHub after the modifications
 
@@ -76,24 +181,33 @@ git commit -m "Added - Fixing somethings"
 git push origin master
 ```
 
-## Contacts
-
-Hey!! If you like this project or if you find some bugs feel free to contact me in my channels:
-
----
-
-* **Email**: luccapsm@gmail.com
-* **Linkedin**: www.linkedin.com/in/lucca-pessoa-4abb71138/
-
----
-
-[![Facebook](https://github.frapsoft.com/social/facebook.png)](https://www.facebook.com/lucca.pessoa.9)
-[![Github](https://github.frapsoft.com/social/github.png)](https://github.com/lpmatos)
-
-## Versioning
+### Versioning
 
 - [CHANGELOG](CHANGELOG.md)
 
-## Project Status
+### License
 
-* In production
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+### Author
+
+👤 **Lucca Pessoa**
+
+Hey!! If you like this project or if you find some bugs feel free to contact me in my channels:
+
+> * Email: luccapsm@gmail.com
+> * Website: https://github.com/lpmatos
+> * Github: [@lpmatos](https://github.com/lpmatos)
+> * LinkedIn: [@luccapessoa](https://www.linkedin.com/in/lucca-pessoa-4abb71138/)
+
+### Show your support
+
+Give a ⭐️ if this project helped you!
+
+### Project Status
+
+* 🔛 In production
+
+---
+
+<p align="center">Feito com ❤️ by <strong>Lucca Pessoa :wave:</p>
