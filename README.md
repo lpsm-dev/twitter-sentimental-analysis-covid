@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="sentiment-analysis" src="docs/images/ROUTES.png" width="250px" float="center"/>
+  <img alt="sentiment-analysis" src="docs/ROUTES.png" width="250px" float="center"/>
 </p>
 
 <h1 align="center">Welcome to Sentiment Analysis Repository</h1>
@@ -98,7 +98,7 @@ Press CTRL + C to stop it in Docker Compose or Dockerfile.
 
 This is a project whose focus is to address the analysis of feelings in a basic way. An api was created to perform the search for tweets and as a result returns a list with the classification: positive, neutral, negative.
 
-![Alt text](docs/images/RESULT.png?raw=true "Result Sentimental Analysis")
+![Alt text](docs/RESULT.png?raw=true "Result Sentimental Analysis")
 
 ### Environment variables
 
@@ -137,7 +137,7 @@ docker container run -it --rm --name <CONTAINER_NAME> -p <LOCAL_PORT:CONTAINER_P
 winpty docker.exe container run -it --rm <IMAGE_NAME> <COMMAND>
 ```
 
-For more information, access the [Docker](https://docs.docker.com/) documentation or [this](docs/annotations/docker.md).
+For more information, access the [Docker](https://docs.docker.com/) documentation or [this](docs/docker.md).
 
 ### 🐋 Development with Docker Compose
 
