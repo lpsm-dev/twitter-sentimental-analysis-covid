@@ -3,7 +3,6 @@
 from app.restplus import api
 from flask_restplus import fields
 
-
 tweets_serializer = api.model(
   "Tweets",
   {
