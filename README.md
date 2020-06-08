@@ -98,7 +98,25 @@ Press CTRL + C to stop it in Docker Compose or Dockerfile.
 
 This is a project whose focus is to address the analysis of feelings in a basic way. An api was created to perform the search for tweets and as a result returns a list with the classification: positive, neutral, negative.
 
-![Alt text](docs/RESULT.png?raw=true "Result Sentimental Analysis")
+### Mongo Schema
+
+![Alt text](docs/images/MONGO_SCHEMA.png?raw=true "Mongo Schema")
+
+### Services
+
+![Alt text](docs/images/SERVICES.png?raw=true "Services")
+
+### Routes
+
+![Alt text](docs/images/ROUTES.png?raw=true "Routes")
+
+### Architecture
+
+![Alt text](docs/images/ARCHITECTURE.png?raw=true "Architecture Sentimental Analysis")
+
+### Results
+
+![Alt text](docs/images/RESULTS.png?raw=true "Results Sentimental Analysis")
 
 ### Environment variables
 
