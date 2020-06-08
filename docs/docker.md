@@ -47,8 +47,3 @@ docker volume prune -f
 ```bash
 docker network prune -f
 ```
-
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
-docker-compose down
-docker volume rm sentiment-analysis_mongodbdata
