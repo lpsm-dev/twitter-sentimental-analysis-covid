@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="sentiment-analysis" src="docs/ROUTES.png" width="250px" float="center"/>
+  <img alt="sentiment-analysis" src="https://www.networkx.nl/wp-content/uploads/2015/02/Twitter_Python_MongoDB-300x289.png" width="250px" float="center"/>
 </p>
 
 <h1 align="center">Welcome to Sentiment Analysis Repository</h1>
