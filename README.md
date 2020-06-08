@@ -118,6 +118,10 @@ This is a project whose focus is to address the analysis of feelings in a basic 
 
 ![Alt text](docs/images/RESULTS.png?raw=true "Results Sentimental Analysis")
 
+### Documentation
+
+[Project Documentation](/docs/helper.md)
+
 ### Environment variables
 
 **Name**  |  **Description**
