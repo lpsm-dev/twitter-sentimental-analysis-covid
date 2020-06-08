@@ -4,6 +4,8 @@ from tools.os import OS
 from settings.log import Log
 from settings.config import Config
 
+from database.mongo import Mongo
+
 # ==============================================================================
 # GLOBAL
 # ==============================================================================
@@ -21,3 +23,10 @@ log_level = config.get_env("LOG_LEVEL") if config.get_env("LOG_LEVEL") else "DEB
 logger_name = config.get_env("LOGGER_NAME") if config.get_env("LOGGER_NAME") else "Sentiment Analysis"
 
 logger = Log(log_path, log_file, log_level, logger_name).logger
+
+mongo_host = config.get_env("MONGO_HOST") if config.get_env("MONGO_HOST") else "mongodb"
+mongo_user = config.get_env("MONGO_INITDB_ROOT_USERNAME") if config.get_env("MONGO_INITDB_ROOT_USERNAME") else None
+mongo_password = config.get_env("MONGO_INITDB_ROOT_PASSWORD") if config.get_env("MONGO_INITDB_ROOT_PASSWORD") else None
+
+mongo = Mongo(mongo_host, mongo_user, mongo_password, port=27017)
+

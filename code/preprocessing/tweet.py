@@ -47,12 +47,12 @@ class TweetCleaner(object):
 
   def filter_tweets(self, tweets: List) -> List:
     return [
-      [ tweet.user.id,
-        tweet.user.name,
-        tweet.user.screen_name,
-        tweet.user.description,
-        tweet.user.followers_count,
-        tweet.user.friends_count,
-        tweet.user.location,
-        self.get_cleaned_text(tweet.text)
-      ] for tweet in tweets]
+      { "_id": str(tweet.user.id) if tweet.user.id else "None",
+        "name": str(tweet.user.name) if tweet.user.name else "None",
+        "screen_name": str(tweet.user.screen_name) if tweet.user.screen_name else "None",
+        "description": str(tweet.user.description) if tweet.user.description else "None",
+        "followers_count": str(tweet.user.followers_count) if tweet.user.followers_count else "None",
+        "friends_count": str(tweet.user.friends_count) if tweet.user.friends_count else "None",
+        "location": str(tweet.user.location) if tweet.user.location else "None",
+        "full_text": self.get_cleaned_text(tweet.full_text) if tweet.full_text else "None"
+      } for tweet in tweets]
