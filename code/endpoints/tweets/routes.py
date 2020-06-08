@@ -73,7 +73,6 @@ class TweetCoronaNoQuery(Resource):
               }, upsert=True)
           except pymongo.errors.DuplicateKeyError as error:
             logger.error(f"Error insert - {error}")
-        mongo.close_connection(mongo_client)
         return {
           "message": responses[200],
           "tweets": tweets
@@ -105,6 +104,14 @@ class TweetCoronaSentimentalNoQuery(Resource):
     db = mongo_client["twitter"]
     collection_corona = db["corona"]
     collection_sentimental = db["sentimental"]
+    if collection_sentimental.count() == 0:
+      logger.info("Sentimental collection is empty")
+      if "sentimental" in db.list_collection_names():
+        logger.info("Sentimental collection exist")
+      else:
+        logger.info("Sentimental collection not exist")
+    else:
+      logger.info("Sentimental collection is not empty")
     try:
       tweets = [tweet for tweet in collection_corona.find()]
       tweets_text_id = [[tweet["_id"], tweet["full_text"]] for tweet in tweets]
@@ -124,16 +131,16 @@ class TweetCoronaSentimentalNoQuery(Resource):
         neutros = analyzer.get_tweets_sentiment(tweets_text_id, sentiment="neutros")
         for tweet in sentiments:
           try:
-            found = collection_sentimental.find(tweet)
+            pprint(tweet)
+            found = collection_sentimental.find_one({"tweet_id": tweet["tweet_id"]})
             if found is None:
               logger.info("Insert data in MongoDB")
               collection_sentimental.insert_one(tweet)
             else:
-              logger.info("Data alredy exist in MongoDB. Continue...")
+              logger.info("Data alredy exist in MongoDB")
               continue
           except pymongo.errors.DuplicateKeyError as error:
             logger.error(f"Error insert - {error}")
-        mongo.close_connection(mongo_client)
         return {
           "message": responses[200],
           "data": {
@@ -189,7 +196,6 @@ class TweetMongoCoronaNoQuery(Resource):
         "data": []
       }, 400
     else:
-      mongo.close_connection(mongo_client)
       return jsonify({"result": tweets})
 
 # ==============================================================================
@@ -219,5 +225,4 @@ class TweetMongoCoronaSentimentalNoQuery(Resource):
         "data": []
       }, 400
     else:
-      mongo.close_connection(mongo_client)
       return jsonify({"result": tweets})
