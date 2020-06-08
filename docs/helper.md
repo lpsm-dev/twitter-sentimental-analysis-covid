@@ -94,3 +94,4 @@ db.getCollection("covid").find({ "friends_count": { $gt: 10000 }})
 * https://stackoverflow.com/questions/25589113/how-to-select-a-single-field-for-all-documents-in-a-mongodb-collection
 * https://www.youtube.com/watch?v=_zxwlrYUHr4&t=932s
 * http://db4beginners.com/blog/join-no-mongodb/
+* https://dzone.com/articles/why-mongodb#:~:text=The%20motivation%20of%20the%20MongoDB,BSON%20documents%20to%20store%20data.
