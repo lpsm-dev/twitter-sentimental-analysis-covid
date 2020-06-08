@@ -49,30 +49,31 @@ class TweetCoronaNoQuery(Resource):
     mongo_client = mongo.get_connection()
     db = mongo_client["twitter"]
     collection = db["corona"]
-    for tweet in tweets:
-      try:
-        found = collection.find(tweet)
-        if found is None:
-          logger.info("Insert data in MongoDB")
-          collection.insert(tweet)
-        else:
-          logger.info("Update data in MongoDB")
-          collection.update_one({"_id": tweet["_id"]}, {
-            "$set": {
-              "name": tweet["name"],
-              "screen_name": tweet["screen_name"],
-              "description": tweet["description"],
-              "followers_count": tweet["followers_count"],
-              "friends_count": tweet["friends_count"],
-              "location": tweet["location"],
-              "full_text": tweet["full_text"]
-            }
-          }, upsert=True)
-      except pymongo.errors.DuplicateKeyError as error:
-        logger.error(f"Error insert - {error}")
     try:
       if tweets:
         logger.info("200 - GET - successfully in get corona tweets")
+        for tweet in tweets:
+          try:
+            found = collection.find_one({"_id": tweet["_id"]}, tweet)
+            if found is None:
+              logger.info("Insert data in MongoDB")
+              collection.insert_one(tweet)
+            else:
+              logger.info("Update data in MongoDB")
+              collection.update_one({"_id": tweet["_id"]}, {
+                "$set": {
+                  "name": tweet["name"],
+                  "screen_name": tweet["screen_name"],
+                  "description": tweet["description"],
+                  "followers_count": tweet["followers_count"],
+                  "friends_count": tweet["friends_count"],
+                  "location": tweet["location"],
+                  "full_text": tweet["full_text"]
+                }
+              }, upsert=True)
+          except pymongo.errors.DuplicateKeyError as error:
+            logger.error(f"Error insert - {error}")
+        mongo.close_connection(mongo_client)
         return {
           "message": responses[200],
           "tweets": tweets
@@ -99,16 +100,40 @@ class TweetCoronaSentimentalNoQuery(Resource):
 
   @api.doc(description="Route to get corona sentimental tweets", responses=responses)
   def get(self):
-    logger.info("Getting sentimental of corona tweets...")
-    tweets = [tweet_clean.get_cleaned_text(tweet.text) for tweet in Twitter().search(**query_tweets)]
+    logger.info("Getting mongo covid tweets...")
+    mongo_client = mongo.get_connection()
+    db = mongo_client["twitter"]
+    collection_corona = db["corona"]
+    collection_sentimental = db["sentimental"]
     try:
-      if tweets:
+      tweets = [tweet for tweet in collection_corona.find()]
+      tweets_text_id = [[tweet["_id"], tweet["full_text"]] for tweet in tweets]
+    except Exception as error:
+      logger.error("400 - GET - {}".format(error))
+      return {
+        "message": str(error),
+        "data": []
+      }, 400
+    try:
+      if tweets_text_id:
         logger.info("200 - GET - successfully in get corona sentimental tweets")
         analyzer =  TweetAnalyzer()
-        sentiments = analyzer.get_tweets_sentiment(tweets, sentiment=None)
-        neg = analyzer.get_tweets_sentiment(tweets, sentiment="neg")
-        pos = analyzer.get_tweets_sentiment(tweets, sentiment="pos")
-        neutros = analyzer.get_tweets_sentiment(tweets, sentiment="neutros")
+        sentiments = analyzer.get_tweets_sentiment(tweets_text_id, sentiment=None)
+        neg = analyzer.get_tweets_sentiment(tweets_text_id, sentiment="neg")
+        pos = analyzer.get_tweets_sentiment(tweets_text_id, sentiment="pos")
+        neutros = analyzer.get_tweets_sentiment(tweets_text_id, sentiment="neutros")
+        for tweet in sentiments:
+          try:
+            found = collection_sentimental.find(tweet)
+            if found is None:
+              logger.info("Insert data in MongoDB")
+              collection_sentimental.insert_one(tweet)
+            else:
+              logger.info("Data alredy exist in MongoDB. Continue...")
+              continue
+          except pymongo.errors.DuplicateKeyError as error:
+            logger.error(f"Error insert - {error}")
+        mongo.close_connection(mongo_client)
         return {
           "message": responses[200],
           "data": {
@@ -152,9 +177,10 @@ class TweetMongoCoronaNoQuery(Resource):
   def get(self):
     logger.info("Getting mongo covid tweets...")
     mongo_client = mongo.get_connection()
-    db = mongo_client.twitter
-    collection = db.corona
+    db = mongo_client["twitter"]
+    collection = db["corona"]
     try:
+      logger.info("Gettings MongoDB tweets")
       tweets = [tweet for tweet in collection.find()]
     except Exception as error:
       logger.error("400 - GET - {}".format(error))
@@ -163,4 +189,35 @@ class TweetMongoCoronaNoQuery(Resource):
         "data": []
       }, 400
     else:
+      mongo.close_connection(mongo_client)
+      return jsonify({"result": tweets})
+
+# ==============================================================================
+# ROUTES MONGO CORONA SENTIMENTAL
+# ==============================================================================
+
+@ns_tweets.route("/mongo/corona/sentimental")
+class TweetMongoCoronaSentimentalNoQuery(Resource):
+
+  @api.doc(description="Route to get Mongo corona tweets sentimental", responses=responses)
+  def get(self):
+    logger.info("Getting mongo covid tweets sentimental...")
+    mongo_client = mongo.get_connection()
+    db = mongo_client["twitter"]
+    collection = db["sentimental"]
+    try:
+      logger.info("Gettings MongoDB tweets sentimental")
+      tweets = [{
+        "code": tweet["code"],
+        "sentiment": tweet["sentiment"],
+        "tweet_id": tweet["tweet_id"],
+      } for tweet in collection.find()]
+    except Exception as error:
+      logger.error("400 - GET - {}".format(error))
+      return {
+        "message": str(error),
+        "data": []
+      }, 400
+    else:
+      mongo.close_connection(mongo_client)
       return jsonify({"result": tweets})

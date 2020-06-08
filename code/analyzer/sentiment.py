@@ -11,13 +11,23 @@ class TweetAnalyzer():
 
   def analyze_sentiment(self, tweet: Text) -> List:
     try:
-      analysis = TextBlob(tweet)
+      analysis = TextBlob(tweet[1])
       if analysis.sentiment.polarity > 0:
-        return [1, "positivo", tweet]
+        return {
+            "code": 1,
+            "sentiment": "positivo",
+            "tweet_id": tweet[0]}
       elif analysis.sentiment.polarity == 0:
-        return [0, "neutro", tweet]
+        return {
+            "code": 0,
+            "sentiment": "neutro",
+            "tweet_id": tweet[0]}
       else:
-        return [-1, "negativo", tweet]
+        return {
+            "code": -1,
+            "sentiment": "negative",
+            "tweet_id": tweet[0]}
+
     except Exception as error:
       logger.error(f"Error tweet analyzer - {error}")
 
@@ -27,11 +37,11 @@ class TweetAnalyzer():
       return sentiments
     else:
       if sentiment == "neg":
-        return [sentiments[tweet][0] for tweet in range(len(sentiments))
-          if sentiments[tweet][0] < 0]
+        return [sentiments[tweet]["code"] for tweet in range(len(sentiments))
+          if sentiments[tweet]["code"] < 0]
       elif sentiment == "pos":
-        return [sentiments[tweet][0] for tweet in range(len(sentiments))
-          if sentiments[tweet][0] > 0]
+        return [sentiments[tweet]["code"] for tweet in range(len(sentiments))
+          if sentiments[tweet]["code"] > 0]
       elif sentiment == "neutros":
-        return [sentiments[tweet][0] for tweet in range(len(sentiments))
-          if sentiments[tweet][0] == 0]
+        return [sentiments[tweet]["code"] for tweet in range(len(sentiments))
+          if sentiments[tweet]["code"] == 0]

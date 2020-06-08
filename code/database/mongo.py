@@ -39,9 +39,9 @@ class Mongo():
     except ServerSelectionTimeoutError  as error:
       print(f"Server Timeout Error - {error}")
 
-  def close_connection(self) -> NoReturn:
+  def close_connection(self, client) -> NoReturn:
     print("Connection getting closed")
-    self.client.close()
+    client.close()
 
   def list_databases(self) -> NoReturn:
     for index, value in enumerate(self.client.list_database_names(), start=1):

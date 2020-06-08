@@ -14,8 +14,8 @@ x-entrypoint: &default-entrypoint
   entrypoint: >
     /bin/sh -c "
       set -e
-      chmod a+x /usr/local/bin/wait && chmod a+x /usr/local/bin/docker-entrypoint \
-        /usr/local/bin/wait && /usr/local/bin/docker-entrypoint uwsgi --ini /usr/src/code/uwsgi.ini
+      chmod a+x /usr/local/bin/wait \
+        /usr/local/bin/wait && uwsgi --ini /usr/src/code/uwsgi.ini
       /bin/bash || exit 0
     "
 
