@@ -3,7 +3,6 @@
 from tools.os import OS
 from settings.log import Log
 from settings.config import Config
-
 from database.mongo import Mongo
 
 # ==============================================================================

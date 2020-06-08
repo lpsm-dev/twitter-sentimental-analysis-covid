@@ -25,7 +25,7 @@ ENV HOME=/usr/src/code
 
 RUN set -ex && apk update && \
     addgroup -g 1000 python && adduser -u 999 -G python -h ${HOME} -s /bin/sh -D python && \
-    mkdir -p ${HOME} && chown -hR python:python ${HOME} /var
+    mkdir -p ${HOME} && chown -hR python:python ${HOME}
 
 RUN apk add --update --no-cache \
       bash=5.0.11-r1 \
@@ -48,5 +48,3 @@ COPY --chown=python:python [ "./code", "." ]
 RUN find ./ -iname "*.py" -type f -exec chmod a+x {} \; -exec echo {} \;;
 
 EXPOSE 5000
-
-CMD [ "uwsgi", "--ini", "/usr/src/code/uwsgi.ini" ]

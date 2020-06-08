@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os, sys
-
 from flask import Flask
 from flask_cors import CORS
-
 from restplus import configure as config_api
-
 from endpoints.tweets.routes import ns_tweets, ns_mongo
 
 # ==============================================================================

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from typing import NoReturn, List
-
 from clients.twitter import TwitterClient
 from variables.envs import (twitter_consumer_key,
                             twitter_consumer_secret,

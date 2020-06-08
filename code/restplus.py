@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from flask_restplus import Api
-
 from typing import NoReturn, Callable
 
 # ==============================================================================

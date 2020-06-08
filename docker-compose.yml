@@ -14,8 +14,7 @@ x-entrypoint: &default-entrypoint
   entrypoint: >
     /bin/sh -c "
       set -e
-      chmod a+x /usr/local/bin/wait \
-        /usr/local/bin/wait && uwsgi --ini /usr/src/code/uwsgi.ini
+        /usr/local/bin/wait && /usr/local/bin/docker-entrypoint uwsgi --ini /usr/src/code/uwsgi.ini
       /bin/bash || exit 0
     "
 
@@ -28,32 +27,6 @@ x-volumes: &default-volumes
 # ==============================================================================
 
 services:
-
-  sentimental-analysis:
-    container_name: ${CONTAINER_NAME}
-    env_file: ./.env
-    build:
-      context: ./${PATH_DOCKERFILE}
-      dockerfile: Dockerfile
-    <<: *default-entrypoint
-    stdin_open: true
-    tty: true
-    ports:
-      - target: 5000
-        published: 5000
-        protocol: tcp
-        mode: host
-    healthcheck:
-      test: nc -z mongodb 27017 || exit 1
-      interval: 10s
-      timeout: 2s
-      retries: 10
-    restart: on-failure
-    logging: *default-logging
-    depends_on: [ "mongodb" ]
-    <<: *default-volumes
-    networks:
-      - backend
 
   mongodb:
     image: mongo:bionic
@@ -81,6 +54,32 @@ services:
     logging: *default-logging
     volumes:
       - mongodbdata:/data/db
+    networks:
+      - backend
+
+  sentimental-analysis:
+    container_name: ${CONTAINER_NAME}
+    env_file: ./.env
+    build:
+      context: ./${PATH_DOCKERFILE}
+      dockerfile: Dockerfile
+    <<: *default-entrypoint
+    stdin_open: true
+    tty: true
+    ports:
+      - target: 5000
+        published: 5000
+        protocol: tcp
+        mode: host
+    healthcheck:
+      test: nc -z mongodb 27017 || exit 1
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    restart: on-failure
+    logging: *default-logging
+    depends_on: [ "mongodb" ]
+    <<: *default-volumes
     networks:
       - backend
 

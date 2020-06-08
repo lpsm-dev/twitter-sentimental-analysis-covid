@@ -4,12 +4,10 @@ try:
   from urllib.parse import quote_plus
 except ImportError:
   from urllib import quote_plus
-
 from bson import ObjectId
 from datetime import datetime
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
-
 from typing import Text, NoReturn, Callable
 
 class Mongo():

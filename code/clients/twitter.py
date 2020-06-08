@@ -2,10 +2,8 @@
 
 from dataclasses import dataclass, field
 from typing import NoReturn, Text, Callable
-
 from tweepy import OAuthHandler, API
 from tweepy.error import TweepError, RateLimitError
-
 from variables.envs import logger
 
 @dataclass(init=True, repr=False)
