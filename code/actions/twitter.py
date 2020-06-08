@@ -1,26 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from app.client.twitter import TwitterClient
-from typing import NoReturn, Text, Callable
-from app.settings.configuration import Configuration
+from typing import NoReturn, List
 
-class Functions(object):
+from clients.twitter import TwitterClient
+from variables.envs import (twitter_consumer_key,
+                            twitter_consumer_secret,
+                            twitter_access_token,
+                            twitter_access_token_secret)
 
-    def __init__(self, logger: Callable) -> NoReturn:
-        self._config = Configuration()
-        self._logger = logger
-        self.twitter = TwitterClient(self.config.get_env("TWITTER_CONSUMER_KEY"),
-                                self.config.get_env("TWITTER_CONSUMER_SECRET"),
-                                self.config.get_env("TWITTER_ACCESS_TOKEN"),
-                                self.config.get_env("TWITTER_ACCESS_TOKEN_SECRET"), self.logger).twitter_client
+class Twitter(object):
 
-    def search(self, **query):
-        return [elemento for elemento in self.twitter.search(**query) if elemento]
+  def __init__(self) -> NoReturn:
+    self.twitter = TwitterClient(
+      twitter_consumer_key,
+      twitter_consumer_secret,
+      twitter_access_token,
+      twitter_access_token_secret
+    ).twitter_client
 
-    @property
-    def config(self) -> Text:
-        return self._config
-
-    @property
-    def logger(self) -> Text:
-        return self._logger
+  def search(self, **query) -> List:
+    return [elemento for elemento in self.twitter.search(**query) if elemento]

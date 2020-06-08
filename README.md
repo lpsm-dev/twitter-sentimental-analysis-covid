@@ -104,6 +104,10 @@ This is a project whose focus is to address the analysis of feelings in a basic 
 
 **Name**  |  **Description**
 :---:  |  :---:
+**TWITTER_CONSUMER_KEY**  |  Twitter Consumer Key
+**TWITTER_CONSUMER_SECRET**  |  Twitter Consumer Secret
+**TWITTER_ACCESS_TOKEN**  |  Twitter Access Token
+**TWITTER_ACCESS_TOKEN_SECRET**  |  Twitter Access Token Secret
 **LOG_PATH**  |  Just the Log Path
 **LOG_FILE**  |  Just the Log File
 **LOG_LEVEL**  |  Just the Log Level

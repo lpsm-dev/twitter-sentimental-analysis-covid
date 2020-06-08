@@ -11,17 +11,6 @@ from app.settings.configuration import Configuration
 from app.analyzer.core import TweetAnalyzer
 from app.analyzer.clean import TweetCleaner
 
-# =============================================================================
-# GLOBAL
-# =============================================================================
-
-config = Configuration()
-
-log_path = config.get_env("LOG_PATH") if config.get_env("LOG_PATH") else None
-log_file = config.get_env("LOG_FILE") if config.get_env("LOG_FILE") else None
-
-log = Log(log_path, log_file, config.get_env("LOG_LEVEL"), config.get_env("LOGGER")).logger
-
 # ==============================================================================
 # ROUTES
 # ==============================================================================

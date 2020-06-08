@@ -2,8 +2,9 @@
 
 import logging
 import coloredlogs
-from tools.os import OS
 from typing import NoReturn, Text
+
+from tools.os import OS
 from settings.handlers import BaseFileHandler, ContextHandler
 
 class SingletonLogger(type):

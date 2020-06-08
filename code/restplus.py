@@ -3,10 +3,6 @@
 from flask_restplus import Api
 from typing import NoReturn, Callable
 
-# ==============================================================================
-# GLOBAL
-# ==============================================================================
-
 api = Api(version="1.0",
         prefix="",
         title="Sentimental Analysis API",
@@ -21,10 +17,6 @@ responses = {200: "Successful operation",
              400: "Invalid status value",
              404: "The server could not find the requested resource (Not Found)",
              500: "Unexpected condition (Internal Server Error)"}
-
-# ==============================================================================
-# FUNCTIONS
-# ==============================================================================
 
 def configure(app: Callable) -> NoReturn:
     api.init_app(app)

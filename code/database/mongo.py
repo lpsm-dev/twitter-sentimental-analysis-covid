@@ -17,10 +17,11 @@ class Mongo():
   def __init__(self, host: Text,
                 user: Text,
                 password: Text,
-                port=27017) -> NoReturn:
+                port=27017, *args, **kwargs) -> NoReturn:
     self.uri = f"mongodb://{quote_plus(user)}:{quote_plus(password)}@{host}:{port}"
     self.client = self.get_connection()
     self.db = self.client["tweets"]
+    self.logger = kwargs["logger"]
 
   def get_connection(self) -> MongoClient:
     try:
@@ -29,17 +30,17 @@ class Mongo():
       try:
         conn.admin.command("ismaster")
       except ConnectionFailure:
-        print(f"Could not connect to MongoDB: {error}")
+        self.logger.error(f"Could not connect to MongoDB: {error}")
       finally:
         try:
           conn["admin"].command("serverStatus")
         except Exception as error:
-          print(e)
+          self.logger.error(f"General Exception Mongo - {error}")
         else:
-          print("You are connected!")
+          self.logger.info("You are connected!")
         return conn
     except ServerSelectionTimeoutError  as error:
-      print(f"Server Timeout Error - {error}")
+      self.logger.error(f"Server Timeout Error - {error}")
 
   def insert(self, element, collection_name):
     element["created"] = datetime.now()
@@ -89,18 +90,12 @@ class Mongo():
     return found
 
   def close_connection(self) -> NoReturn:
-    print ("Connection getting closed")
+    self.logger.info("Connection getting closed")
     self.client.close()
 
   def list_databases(self) -> NoReturn:
     for index, value in enumerate(self.client.list_database_names(), start=1):
-      print(f"Database {index} - {value}")
+      self.logger.info(f"Database {index} - {value}")
 
   def show_status(self) -> NoReturn:
-    print(self.client["admin"].command("serverStatus"))
-
-if __name__ == "__main__":
-
-  mongo = Mongo("mongodb", "user", "123456")
-  mongo.list_databases()
-  mongo.close_connection()
+    self.logger.info(self.client["admin"].command("serverStatus"))

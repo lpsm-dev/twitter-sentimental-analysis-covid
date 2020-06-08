@@ -6,15 +6,7 @@ from .restplus import configure as config_api
 from .endpoints.tweets.routes import ns_tweets
 from app.settings.configuration import Configuration
 
-# ==============================================================================
-# GLOBAL
-# ==============================================================================
-
 config = Configuration()
-
-# ==============================================================================
-# FUNCTIONS
-# ==============================================================================
 
 def create_app(config_filename=None):
     app = Flask(__name__, instance_relative_config=True)

@@ -27,7 +27,7 @@ class ContextHandler:
 class BaseFileHandler(StrategyHandler):
 
   @staticmethod
-  def set_handler(file_handler) -> NoReturn:
+  def set_handler(file_handler, *args, **kwargs) -> NoReturn:
     file_handler.setLevel(kwargs["log_level"])
     file_handler.setFormatter(
       jsonlogger.JsonFormatter(kwargs["formatter"])
@@ -35,13 +35,13 @@ class BaseFileHandler(StrategyHandler):
 
   def handler(self, *args, **kwargs) -> logging.FileHandler:
     file_handler = logging.FileHandler(filename=kwargs["log_file"])
-    self.set_handler(file_handler)
+    self.set_handler(file_handler, *args, **kwargs)
     return file_handler
 
 class BaseStreamHandler(StrategyHandler):
 
   @staticmethod
-  def set_handler(stream_handler) -> NoReturn:
+  def set_handler(stream_handler, *args, **kwargs) -> NoReturn:
     stream_handler.setLevel(kwargs["log_level"])
     stream_handler.setFormatter(
       jsonlogger.JsonFormatter(kwargs["formatter"])
@@ -49,5 +49,5 @@ class BaseStreamHandler(StrategyHandler):
 
   def handler(self, *args, **kwargs) -> logging.StreamHandler:
     stream_handler = logging.StreamHandler(sys.stdout)
-    self.set_handler(stream_handler)
+    self.set_handler(stream_handler, *args, **kwargs)
     return stream_handler
