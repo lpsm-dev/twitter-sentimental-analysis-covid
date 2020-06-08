@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from typing import NoReturn, Text
 from dataclasses import dataclass, field
+from typing import NoReturn, Text, Callable
 
 from tweepy import OAuthHandler, API
 from tweepy.error import TweepError, RateLimitError
@@ -18,9 +18,9 @@ class TwitterBase(object):
 class TwitterAuthenticator(TwitterBase):
 
   def __init__(self, consumer_key: Text,
-                consumer_secret: Text,
-                access_token: Text,
-                access_token_secret: Text) -> NoReturn:
+      consumer_secret: Text,
+      access_token: Text,
+      access_token_secret: Text) -> NoReturn:
     super().__init__(consumer_key,
                       consumer_secret,
                       access_token,
@@ -40,9 +40,9 @@ class TwitterAuthenticator(TwitterBase):
 class TwitterClient(TwitterAuthenticator):
 
   def __init__(self, consumer_key: Text,
-                consumer_secret: Text,
-                access_token: Text,
-                access_token_secret: Text) -> NoReturn:
+      consumer_secret: Text,
+      access_token: Text,
+      access_token_secret: Text) -> NoReturn:
     super().__init__(consumer_key,
                       consumer_secret,
                       access_token,

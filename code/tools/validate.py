@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-class Validator(object):
+class Validator():
 
   def validate_type(self, element, desired_type):
     if desired_type == "int":

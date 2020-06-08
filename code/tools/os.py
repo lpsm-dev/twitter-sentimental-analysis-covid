@@ -29,7 +29,8 @@ class OS:
   def create_file(cls, file: Text) -> NoReturn:
       with open(file, mode="w"): pass
 
-  def check_if_path_and_file_exist(self, directory: Text, file: Text, creation=True) -> NoReturn:
+  def check_if_path_and_file_exist(self, directory: Text,
+      file: Text, creation=True) -> NoReturn:
     if self.check_if_is_dir(directory):
       if not self.check_if_is_file(file):
         if creation:

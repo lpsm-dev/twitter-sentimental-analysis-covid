@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from flask_restplus import Api
+
 from typing import NoReturn, Callable
+
+# ==============================================================================
+# GLOBAL
+# ==============================================================================
 
 api = Api(version="1.0",
         prefix="",
@@ -18,6 +23,10 @@ responses = {200: "Successful operation",
              404: "The server could not find the requested resource (Not Found)",
              500: "Unexpected condition (Internal Server Error)"}
 
+# ==============================================================================
+# FUNCTIONS
+# ==============================================================================
+
 def configure(app: Callable) -> NoReturn:
-    api.init_app(app)
-    app.api = api
+  api.init_app(app)
+  app.api = api

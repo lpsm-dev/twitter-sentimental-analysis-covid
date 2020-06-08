@@ -14,3 +14,4 @@ nltk==3.4.5
 emoji==0.5.4
 pymongo==3.10.1
 textblob==0.15.3
+vaderSentiment==3.3.2

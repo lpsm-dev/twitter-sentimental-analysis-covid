@@ -23,9 +23,9 @@ class Log(OS, metaclass=SingletonLogger):
   LEVELS = ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"]
 
   def __init__(self, log_path: Text,
-                log_file: Text,
-                log_level: Text,
-                logger_name: Text) -> NoReturn:
+      log_file: Text,
+      log_level: Text,
+      logger_name: Text) -> NoReturn:
     self._log_path = log_path
     self._log_file = self.join_directory_with_file(self.log_path, log_file)
     self._log_level = log_level if log_level in self.LEVELS else "DEBUG"
@@ -40,7 +40,8 @@ class Log(OS, metaclass=SingletonLogger):
     ).get_handler(
       log_file=self.log_file,
       log_level=self.log_level,
-      formatter=self.formatter))
+      formatter=self.formatter)
+    )
 
   def _base_configuration_log_colored(self) -> coloredlogs.install:
     coloredlogs.install(level=self._log_level,
