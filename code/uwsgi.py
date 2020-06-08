@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 from restplus import configure as config_api
 
-from endpoints.tweets.routes import ns_tweets
+from endpoints.tweets.routes import ns_tweets, ns_mongo
 
 # ==============================================================================
 # FUNCTIONS
@@ -18,6 +18,7 @@ def create_app(config_filename=None):
   _ = CORS(app, resources={r"*": {"origins": "*"}})
   config_api(app)
   app.api.add_namespace(ns_tweets)
+  app.api.add_namespace(ns_mongo)
   register_blueprints(app)
   return app
 

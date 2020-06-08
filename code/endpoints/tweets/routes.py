@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import json
 import pymongo
+from bson import json_util
 
 from flask import jsonify
 from flask_restplus import Resource
 
-from restplus import api, responses, ns_tweets
-
-from serializers.tweets import tweets_serializer
+from restplus import api, responses, ns_tweets, ns_mongo
 
 from actions.twitter import Twitter
 
@@ -39,7 +39,7 @@ query_tweets = {
 # ROUTES CORONA
 # ==============================================================================
 
-@ns_tweets.route("/corona")
+@ns_tweets.route("/covid-19")
 class TweetCoronaNoQuery(Resource):
 
   @api.doc(description="Route to get corona tweets", responses=responses)
@@ -75,7 +75,7 @@ class TweetCoronaNoQuery(Resource):
             logger.error(f"Error insert - {error}")
         return {
           "message": responses[200],
-          "tweets": tweets
+          "count": len(tweets)
         },  200
       else:
         logger.info("400 - GET - no corona tweets")
@@ -89,12 +89,13 @@ class TweetCoronaNoQuery(Resource):
         "message": str(error),
         "data": []
       }, 400
+    mongo.close_connection(mongo_client)
 
 # ==============================================================================
 # ROUTES CORONA SENTIMENTAL
 # ==============================================================================
 
-@ns_tweets.route("/corona/sentimental")
+@ns_tweets.route("/covid-19/sentimental")
 class TweetCoronaSentimentalNoQuery(Resource):
 
   @api.doc(description="Route to get corona sentimental tweets", responses=responses)
@@ -131,32 +132,24 @@ class TweetCoronaSentimentalNoQuery(Resource):
         neutros = analyzer.get_tweets_sentiment(tweets_text_id, sentiment="neutros")
         for tweet in sentiments:
           try:
-            pprint(tweet)
             found = collection_sentimental.find_one({"tweet_id": tweet["tweet_id"]})
             if found is None:
               logger.info("Insert data in MongoDB")
               collection_sentimental.insert_one(tweet)
             else:
-              logger.info("Data alredy exist in MongoDB")
-              continue
+              logger.info("Update data in MongoDB")
+              collection_sentimental.update_one({"tweet_id": tweet["tweet_id"]}, {
+                "$set": {
+                  "code": tweet["code"],
+                  "sentiment": tweet["sentiment"],
+                  "tweet_id": tweet["tweet_id"]
+                }
+              }, upsert=True)
           except pymongo.errors.DuplicateKeyError as error:
-            logger.error(f"Error insert - {error}")
+            continue
         return {
           "message": responses[200],
-          "data": {
-            "sentiments": sentiments,
-            "counter": {
-              "total": len(sentiments),
-              "neg": len(neg),
-              "pos": len(pos),
-              "neutros": len(neutros)
-            },
-            "percent": {
-              "neg": len(neg)/len(sentiments),
-              "pos": len(pos)/len(sentiments),
-              "neutros": len(neutros)/len(sentiments),
-            }
-          }
+          "count": len(sentiments)
         },  200
       else:
         logger.info("400 - GET - no corona tweets")
@@ -172,12 +165,13 @@ class TweetCoronaSentimentalNoQuery(Resource):
         "data": [],
         "count": 0,
       }, 400
+    mongo.close_connection(mongo_client)
 
 # ==============================================================================
 # ROUTES MONGO CORONA
 # ==============================================================================
 
-@ns_tweets.route("/mongo/corona")
+@ns_mongo.route("/corona")
 class TweetMongoCoronaNoQuery(Resource):
 
   @api.doc(description="Route to get Mongo corona tweets", responses=responses)
@@ -189,6 +183,8 @@ class TweetMongoCoronaNoQuery(Resource):
     try:
       logger.info("Gettings MongoDB tweets")
       tweets = [tweet for tweet in collection.find()]
+      if len(tweets) == 0:
+        logger.info("Empty Tweets")
     except Exception as error:
       logger.error("400 - GET - {}".format(error))
       return {
@@ -197,12 +193,13 @@ class TweetMongoCoronaNoQuery(Resource):
       }, 400
     else:
       return jsonify({"result": tweets})
+    mongo.close_connection(mongo_client)
 
 # ==============================================================================
 # ROUTES MONGO CORONA SENTIMENTAL
 # ==============================================================================
 
-@ns_tweets.route("/mongo/corona/sentimental")
+@ns_mongo.route("/corona/sentimental")
 class TweetMongoCoronaSentimentalNoQuery(Resource):
 
   @api.doc(description="Route to get Mongo corona tweets sentimental", responses=responses)
@@ -218,6 +215,8 @@ class TweetMongoCoronaSentimentalNoQuery(Resource):
         "sentiment": tweet["sentiment"],
         "tweet_id": tweet["tweet_id"],
       } for tweet in collection.find()]
+      if len(tweets) == 0:
+        logger.info("Empty Tweets")
     except Exception as error:
       logger.error("400 - GET - {}".format(error))
       return {
@@ -225,4 +224,7 @@ class TweetMongoCoronaSentimentalNoQuery(Resource):
         "data": []
       }, 400
     else:
-      return jsonify({"result": tweets})
+      return jsonify({
+        "result": tweets
+      })
+    mongo.close_connection(mongo_client)

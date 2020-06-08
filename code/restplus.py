@@ -17,6 +17,7 @@ api = Api(version="1.0",
         doc="/documentation")
 
 ns_tweets = api.namespace("tweets", description="Tweets operations")
+ns_mongo = api.namespace("mongo", description="Mongo operations")
 
 responses = {200: "Successful operation",
              400: "Invalid status value",

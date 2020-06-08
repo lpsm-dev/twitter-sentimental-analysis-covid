@@ -12,3 +12,13 @@ tweets_serializer = api.model(
     "language": fields.String(required=True)
   }
 )
+
+mongo_serializer = api.model(
+  "Mongo",
+  {
+    "text": fields.String(required=True),
+    "count": fields.Integer(required=False),
+    "result_type": fields.String(required=False),
+    "language": fields.String(required=True)
+  }
+)
