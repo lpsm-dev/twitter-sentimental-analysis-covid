@@ -4,15 +4,13 @@
 
 O Twitter hoje em dia é uma mina de ouro de dados. Ao contrário de outras plataformas e rede sociais, quase todos os tweets dos usuários são completamente públicos e acessíveis. Essa é uma enorme vantagem se você estiver tentando obter uma considerável massa de dados para executar análises. Os dados do Twitter também são bastante específicos.
 
-A API do Twitter permite que você faça consultas complexas, como puxar todos os tweets sobre um determinado tópico nos últimos vinte minutos, ou puxar os tweets não retuitados de um determinado usuário.
-
 ## Problema
 
-Sabemos que em tempos de crise, a melhor ferramenta que temos são os dados. Tento isso como consideração, o problema central que temos aqui é a coleta de dados do Twitter que tenham a palavra "covid-19" em seu tweet para que passamos tirar análises e tentar prever que tipo de sentimento uma determinada quantidade de pessoas transmitem quando utilizam essa palavra.
+Sabemos que em tempos de crise, a melhor ferramenta que temos são os dados. Tento isso como consideração, o problema central que temos aqui é a coleta de dados do Twitter que tenham a palavra "covid-19" em seu tweet para que passamos tirar análises e tentar prever que tipo de sentimento uma determinada quantidade de pessoas transmite quando utilizam essa palavra.
 
 ## Proposta
 
-Tendo em vista a pandamenia ocorrida recentemente, temos como proposta proposta a criação de um analisador sentimental para tweets com a palavra "covid-19" no Twitter e que utiliza o bando de dados NoSQL MondoDB para armazenar as informações coletadas e tratadas.
+Tendo em vista a pandemia ocorrida recentemente, temos como proposta a criação de um analisador sentimental para tweets com a palavra "covid-19" no Twitter e que utiliza o bando de dados NoSQL MondoDB para armazenar as informações coletadas e tratadas.
 
 ## Caracterização do banco utilizado
 
