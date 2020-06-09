@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import NoReturn, Text, Callable
 from tweepy import OAuthHandler, API
 from tweepy.error import TweepError, RateLimitError
-from variables.envs import logger
+from variables.general import logger
 
 @dataclass(init=True, repr=False)
 class TwitterBase(object):
@@ -62,7 +62,7 @@ class TwitterClient(TwitterAuthenticator):
     except TweepError as error:
       logger.error(f"Tweepy TweepError - {error}")
     except Exception as error:
-      logger.error(f"Error general exception in   - {error}")
+      logger.error(f"Error general exception - {error}")
     else:
-      logger.info("Successful Authentication!")
+      logger.info("Successful Twitter Authentication!")
       return twitter_client

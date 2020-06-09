@@ -1,31 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import pymongo
 from flask import jsonify
 from flask_restplus import Resource
-from restplus import api, responses, ns_tweets, ns_mongo
+from pymongo.errors import DuplicateKeyError
+from restplus import api, responses, ns_tweets
 from actions.twitter import Twitter
-from analyzer.sentiment import TweetAnalyzer
-from preprocessing.tweet import TweetCleaner
-from variables.envs import logger, mongo
-
-# ==============================================================================
-# GLOBAL
-# ==============================================================================
-
-tweet_clean = TweetCleaner(language="english",
-  remove_stop_words=False, remove_retweets=False
-)
-
-query_tweets = {
-  "q": "covid-19",
-  "result_type": "mixed",
-  "count": 100,
-  "lang": "en",
-  "tweet_mode": "extended"
-}
-
-analyzer =  TweetAnalyzer()
+from variables.general import logger
+from variables.mongo import mongo
+from variables.tweet import tweet_clean, query_tweets, analyzer
 
 # ==============================================================================
 # ROUTES COVID
@@ -57,7 +39,7 @@ class TweetCovidNoQuery(Resource):
               logger.info("Insert data covid tweet in MongoDB - Successfully insert data!")
             else:
               logger.error("Insert data covid tweet in MongoDB - Bad insert data...")
-        except pymongo.errors.DuplicateKeyError as error:
+        except DuplicateKeyError as error:
           logger.error("400 - GET - no covid tweets")
           logger.error(f"DuplicateKeyError - {error}")
           return {
@@ -158,64 +140,4 @@ class TweetCovidSentimentalNoQuery(Resource):
         "data": [],
         "count": 0,
       },  400
-    mongo.close_connection(mongo_client)
-
-# ==============================================================================
-# ROUTES MONGO COVID
-# ==============================================================================
-
-@ns_mongo.route("/covid")
-class TweetMongoCovidNoQuery(Resource):
-
-  @api.doc(description="Route to get covid tweets from MongoDB", responses=responses)
-  def get(self):
-    mongo_client = mongo.get_connection()
-    db = mongo_client["twitter"]
-    collection = db["covid"]
-    try:
-      logger.info("Getting covid tweets from MongoDB...")
-      tweets = [tweet for tweet in collection.find()]
-      if len(tweets) == 0:
-        logger.warning("No covid tweets. Empty information")
-    except Exception as error:
-      logger.error("400 - GET - {}".format(error))
-      return {
-        "message": str(error),
-        "data": []
-      }, 400
-    else:
-      return jsonify({"result": tweets})
-    mongo.close_connection(mongo_client)
-
-# ==============================================================================
-# ROUTES MONGO COVID SENTIMENTAL
-# ==============================================================================
-
-@ns_mongo.route("/covid/sentimental")
-class TweetMongoCovidSentimentalNoQuery(Resource):
-
-  @api.doc(description="Route to get the sentimental analysis of covid tweets from MongoDB", responses=responses)
-  def get(self):
-    mongo_client = mongo.get_connection()
-    db = mongo_client["twitter"]
-    collection = db["sentimental"]
-    try:
-      logger.info("Getting sentimental analysis of covid tweets from MongoDB...")
-      tweets = [{
-        "code": tweet["code"],
-        "sentiment": tweet["sentiment"],
-        "tweet_id": tweet["tweet_id"],
-      } for tweet in collection.find()]
-      if len(tweets) == 0:
-        logger.warning("No sentimental analysis of covid tweets. Empty information")
-    except Exception as error:
-      logger.error("400 - GET - {}".format(error))
-      return {
-        "message": str(error),
-        "data": []
-      }, 400
-    else:
-      return jsonify({
-        "result": tweets
-      })
     mongo.close_connection(mongo_client)

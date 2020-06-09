@@ -232,7 +232,7 @@ Give a ⭐️ if this project helped you!
 
 ### Project Status
 
-* 🔛 In production
+* ✔️ Finish
 
 ---
 

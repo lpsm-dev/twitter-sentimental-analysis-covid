@@ -4,7 +4,8 @@ import os, sys
 from flask import Flask
 from flask_cors import CORS
 from restplus import configure as config_api
-from endpoints.tweets.routes import ns_tweets, ns_mongo
+from endpoints.tweets.routes import ns_tweets
+from endpoints.mongo.routes import ns_mongo
 
 # ==============================================================================
 # FUNCTIONS

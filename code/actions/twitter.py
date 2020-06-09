@@ -2,7 +2,7 @@
 
 from typing import NoReturn, List
 from clients.twitter import TwitterClient
-from variables.envs import (twitter_consumer_key,
+from variables.general import (twitter_consumer_key,
                             twitter_consumer_secret,
                             twitter_access_token,
                             twitter_access_token_secret,
@@ -20,8 +20,9 @@ class Twitter(object):
 
   def search(self, **query) -> List:
     try:
-      search = [elemento for elemento in self.twitter.search(**query) if elemento]
-    except Exceptio as error:
-      logger.error(f"Error twitter client search - {Exceptio}")
+      search = [elemento for elemento in self.twitter.search(**query)
+                  if elemento]
+    except Exception as error:
+      logger.error(f"Error twitter action search - {error}")
     else:
       return search

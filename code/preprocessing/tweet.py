@@ -4,7 +4,7 @@ import re
 import emoji
 from nltk.corpus import stopwords
 from typing import NoReturn, Text, List
-from variables.envs import logger
+from variables.general import logger
 
 class TweetCleaner(object):
 
@@ -46,7 +46,8 @@ class TweetCleaner(object):
 
   def filter_tweets(self, tweets: List) -> List:
     return [
-      { "_id": tweet.user.id,
+      {
+        "_id": tweet.user.id,
         "name": tweet.user.name,
         "screen_name": tweet.user.screen_name,
         "description": tweet.user.description,
@@ -54,4 +55,5 @@ class TweetCleaner(object):
         "friends_count": tweet.user.friends_count,
         "location": tweet.user.location,
         "full_text": self.get_cleaned_text(tweet.full_text)
-      } for tweet in tweets]
+      } for tweet in tweets
+    ]

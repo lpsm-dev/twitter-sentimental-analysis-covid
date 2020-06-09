@@ -8,7 +8,7 @@ from typing import NoReturn, Callable
 # ==============================================================================
 
 api = Api(version="1.0",
-        prefix="",
+        prefix="/api/v1",
         title="Sentimental Analysis API",
         description="Swagger domumentation from Sentimental Analysis API",
         contact="Lucca Pessoa da Silva Matos",

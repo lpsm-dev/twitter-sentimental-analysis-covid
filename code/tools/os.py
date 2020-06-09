@@ -15,7 +15,9 @@ class OS:
     return True if path.isfile(file) else False
 
   @classmethod
-  def join_directory_with_file(cls, directory: Text, file: Text) -> Text:
+  def join_directory_with_file(cls,
+      directory: Text,
+      file: Text) -> Text:
     return str(path.join(directory, file))
 
   @classmethod
