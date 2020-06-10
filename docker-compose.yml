@@ -14,7 +14,23 @@ x-entrypoint: &default-entrypoint
   entrypoint: >
     /bin/sh -c "
       set -e
-        /usr/local/bin/wait && /usr/local/bin/docker-entrypoint uwsgi --ini /usr/src/code/uwsgi.ini
+        /usr/local/bin/wait && uwsgi --ini /usr/src/code/uwsgi.ini
+      /bin/bash || exit 0
+    "
+
+x-entrypoint-mongoku: &default-entrypoint-mongoku
+  entrypoint: >
+    /bin/sh -c "
+      set -e
+        /usr/local/bin/wait && /app/docker-run.sh
+      /bin/bash || exit 0
+    "
+
+x-entrypoint-adminmongo: &default-entrypoint-adminmongo
+  entrypoint: >
+    /bin/sh -c "
+      set -e
+        /usr/local/bin/wait && node app.js
       /bin/bash || exit 0
     "
 
@@ -54,6 +70,48 @@ services:
     logging: *default-logging
     volumes:
       - mongodbdata:/data/db
+    networks:
+      - backend
+
+  adminmongo:
+    image: mrvautin/adminmongo
+    container_name: adminmongo
+    env_file: [ "./.env" ]
+    environment:
+      HOST: ${HOST}
+    <<: *default-entrypoint-adminmongo
+    stdin_open: true
+    tty: true
+    ports:
+      - target: 1234
+        published: 1234
+        protocol: tcp
+        mode: host
+    restart: on-failure
+    logging: *default-logging
+    depends_on: [ "mongodb" ]
+    <<: *default-volumes
+    networks:
+      - backend
+
+  mongoku:
+    image: huggingface/mongoku
+    container_name: mongoku
+    env_file: [ "./.env" ]
+    environment:
+      MONGOKU_DEFAULT_HOST: ${MONGOKU_DEFAULT_HOST}
+    <<: *default-entrypoint-mongoku
+    stdin_open: true
+    tty: true
+    ports:
+      - target: 3100
+        published: 3100
+        protocol: tcp
+        mode: host
+    restart: on-failure
+    logging: *default-logging
+    depends_on: [ "mongodb" ]
+    <<: *default-volumes
     networks:
       - backend
 

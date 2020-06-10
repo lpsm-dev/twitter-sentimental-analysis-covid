@@ -2,6 +2,16 @@
 
 All important changes to this project will be added to this file! This changelog will be based on [Keep a change log](http://keepachangelog.com/)
 
+## 1.1.0 - [ 10-06-2020 ]
+
+### Added
+
+* Adding Mongoku and Admin Mongo in Docker-Compose.
+
+### Fixed
+
+* Fix methods in mongo class - logger.error to logger.info.
+
 ## 1.0.0 - [ 07-06-2020 ]
 
 ### Added

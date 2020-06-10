@@ -34,18 +34,18 @@ class Mongo():
         except Exception as error:
           logger.error(f"General Exception Mongo - {error}")
         else:
-          logger.error("You are connected!")
+          logger.info("You are connected!")
         return conn
     except ServerSelectionTimeoutError  as error:
       logger.error(f"Server Timeout Error - {error}")
 
   def close_connection(self, client: Callable) -> NoReturn:
-    logger.error("Connection getting closed")
+    logger.info("Connection getting closed")
     client.close()
 
   def list_databases(self) -> NoReturn:
     for index, value in enumerate(self.client.list_database_names(), start=1):
-      logger.error(f"Database {index} - {value}")
+      logger.info(f"Database {index} - {value}")
 
   def show_status(self) -> NoReturn:
     print(self.client["admin"].command("serverStatus"))
