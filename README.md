@@ -124,7 +124,9 @@ This is a project whose focus is to address the analysis of feelings in a basic 
 
 [Project Documentation](/docs/helper.md)
 
-### Mongoku and AdminMongo
+### MongoDB Tools
+
+Some MongoDB Tools that we use in this project.
 
 #### Mongoku
 
