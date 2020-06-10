@@ -62,13 +62,13 @@ Pull requests are welcome. If you'd like to support the work and buy me a ☕, I
 
 ### Getting Started
 
-To use this repository you need a **git clone**:
+If you want use this repository you need to make a **git clone**:
 
 ```bash
 git clone --depth 1 https://github.com/lpmatos/sentiment-analysis.git -b master
 ```
 
-This will give access of the project on your local machine.
+This will give access on your **local machine**.
 
 ### Pre-Requisites
 
