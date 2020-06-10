@@ -82,6 +82,8 @@ To this project you yeed:
 
 - [Python](https://www.python.org/)
 - [MongoDB](https://www.mongodb.com/)
+- [Mongoku](https://github.com/huggingface/Mongoku)
+- [AdminMongo](https://github.com/mrvautin/adminMongo)
 - [Docker](https://docs.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
@@ -121,6 +123,22 @@ This is a project whose focus is to address the analysis of feelings in a basic 
 ### Documentation
 
 [Project Documentation](/docs/helper.md)
+
+### Mongoku and AdminMongo
+
+#### Mongoku
+
+MongoDB client for the web. Query your data directly from your browser. You can host it locally, or anywhere else, for you and your team.
+
+It scales with your data (at Hugging Face we use it on a 1TB+ cluster) and is blazing fast for all operations, including sort/skip/limit. Built on TypeScript/Node.js/Angular.
+
+#### AdminMongo
+
+AdminMongo is a cross platform user interface (GUI) to handle all your MongoDB connections/databases needs. AdminMongo is fully responsive and should work on a range of devices.
+
+>
+> AdminMongo connection information (including username/password) is stored unencrypted in a config file, it is not recommended to run this application on a production or public facing server without proper security considerations.
+>
 
 ### Environment variables
 
