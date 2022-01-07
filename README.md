@@ -227,33 +227,44 @@ git commit -m "Added - Fixing somethings"
 git push origin master
 ```
 
-### Versioning
+## ➤ Author <a name = "author"></a>
 
-- [CHANGELOG](CHANGELOG.md)
+👤 Hey!! If you like this project or if you find some bugs feel free to contact me in my channels:
 
-### License
+>
+> * Linktree: https://linktr.ee/lpmatos
+>
 
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+## ➤ Versioning <a name = "versioning"></a>
 
-### Author
+To check the change history, please access the [**CHANGELOG.md**](CHANGELOG.md) file.
 
-👤 **Lucca Pessoa**
+## ➤ Project status <a name = "project-status"></a>
 
-Hey!! If you like this project or if you find some bugs feel free to contact me in my channels:
+This repository is a study project, therefore, it will not always be maintained 👻.
 
-> * Email: luccapsm@gmail.com
-> * Website: https://github.com/lpmatos
-> * Github: [@lpmatos](https://github.com/lpmatos)
-> * LinkedIn: [@luccapessoa](https://www.linkedin.com/in/lucca-pessoa-4abb71138/)
+## ➤ Donations <a name = "donations"></a>
 
-### Show your support
+<p align="center">
+  <a href="https://www.blockchain.com/pt/btc/address/bc1qn50elv826qs2qd6xhfh6n79649epqyaqmtwky5">
+    <img alt="BTC Address" src="https://img.shields.io/badge/BTC%20Address-black?style=for-the-badge&logo=bitcoin&logoColor=white">
+  </a>
 
-Give a ⭐️ if this project helped you!
+  <a href="https://live.blockcypher.com/ltc/address/ltc1qwzrxmlmzzx68k2dnrcrplc4thadm75khzrznjw/">
+    <img alt="Litecoin Address" src="https://img.shields.io/badge/Litecoin%20Address-black?style=for-the-badge&logo=litecoin&logoColor=white">
+  </a>
+</p>
 
-### Project Status
+## ➤ Show your support <a name = "show-your-support"></a>
 
-* ✔️ Finish
+<div align="center">
 
----
+Give me a ⭐️ if this project helped you!
 
-<p align="center">Feito com ❤️ by <strong>Lucca Pessoa :wave:</p>
+<p>
+  <img alt="gif-header" src="https://www.icegif.com/wp-content/uploads/baby-yoda-bye-bye-icegif.gif" width="350px" float="center"/>
+</p>
+
+Made with 💜 by [me](https://github.com/lpmatos) 👋 inspired on [readme-md-generator](https://github.com/kefranabg/readme-md-generator)
+
+</div>
