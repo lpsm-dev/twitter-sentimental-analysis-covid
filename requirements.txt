@@ -1,6 +1,6 @@
 coloredlogs==14.3
 python-json-logger==0.1.11
-pyfiglet==0.7
+pyfiglet==0.8.post1
 termcolor==1.1.0
 colorama==0.4.4
 Flask==1.1.4
