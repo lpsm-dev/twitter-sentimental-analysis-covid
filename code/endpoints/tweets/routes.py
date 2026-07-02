@@ -116,7 +116,7 @@ class TweetCovidSentimentalNoQuery(Resource):
                 logger.info("Insert data sentimental analysis in MongoDB - Successfully insert data!")
               else:
                 logger.error("Insert data sentimental analysis in MongoDB - Bad insert data...")
-          except pymongo.errors.DuplicateKeyError as error:
+          except DuplicateKeyError as error:
             logger.error("400 - GET - no data sentimental analysis of covid tweets")
             logger.error(f"DuplicateKeyError - {error}")
             return {
